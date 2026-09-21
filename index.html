@@ -104,33 +104,6 @@
       background-size: 6px 6px;
     }
 
-    .discord-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 0.8rem;
-      padding: 0.5rem 1.1rem;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--ttrl-red), var(--ttrl-blue), var(--ttrl-yellow));
-      color: var(--ttrl-black);
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
-    }
-
-    .discord-cta span {
-      text-transform: none;
-      letter-spacing: 0.02em;
-    }
-
-    .discord-cta:hover {
-      filter: brightness(1.05);
-      transform: translateY(-1px);
-    }
-
     .filters {
       display: flex;
       flex-wrap: wrap;
@@ -438,21 +411,6 @@
       font-size: 0.6rem;
     }
 
-    .discord-link {
-      text-align: center;
-      padding: 0.4rem 1.25rem 1.3rem;
-      color: var(--muted);
-      font-size: 0.75rem;
-      border-top: 1px solid rgba(31, 41, 55, 0.9);
-      background: rgba(3, 4, 12, 0.9);
-    }
-
-    .discord-link a {
-      color: var(--ttrl-blue);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
@@ -553,9 +511,6 @@
     <h1>Hall of Fame</h1>
     <p>Sunday racers, mid‑week specialists, and special event champions who defined TTRL history.</p>
 
-    <a class="discord-cta" href="https://discord.gg/ttrl" target="_blank" rel="noopener">
-      Join Discord
-    </a>
   </header>
 
   <div class="filters">
@@ -1038,11 +993,6 @@ Willz
       </div>
     </section>
   </main>
-
-  <div class="discord-link">
-    <span>Want your name here? Join the grid on our Discord.</span>
-    <a href="https://discord.gg/ttrl" target="_blank" rel="noopener">Join Discord</a>
-  </div>
 
   <script>
     const tabButtons = document.querySelectorAll('.filters button');
