@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#04040a" />
+  <meta name="description" content="Celebrating every champion and the legacy of Torque Titans Racing League, 2022–2026." />
+  <title>TTRL — A Legacy of Champions</title>
+  <style>
+    :root {
+      --red: #ff2b2b;
+      --blue: #0075ff;
+      --yellow: #ffd600;
+      --white: #fff;
+      --text: #f9fafb;
+      --muted: #a4a8b5;
+      --bg: #04040a;
+      --line: rgba(148,163,184,.26);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(ellipse at 50% 18%, rgba(0,117,255,.13), transparent 43rem),
+        radial-gradient(ellipse at 8% 36%, rgba(255,43,43,.13), transparent 34rem),
+        linear-gradient(180deg, #070811, var(--bg) 55%, #080811);
+    }
+    a { color: inherit; }
+    .page { width: min(100% - 2.5rem, 1050px); margin: auto; }
+    .masthead { text-align: center; padding: 1rem 0 0; }
+    .logo { display: block; width: min(175px, 44vw); height: auto; margin: 0 auto .55rem; }
+    .badge {
+      display: inline-flex; align-items: center; gap: .65rem;
+      padding: .4rem .85rem; border: 1px solid var(--line); border-radius: 99px;
+      color: #c7cad3; background: linear-gradient(90deg, rgba(255,43,43,.1), rgba(0,117,255,.1), rgba(255,214,0,.08));
+      font-size: .7rem; letter-spacing: .16em; text-transform: uppercase;
+    }
+    .badge-strip { display: flex; overflow: hidden; border-radius: 99px; }
+    .badge-strip i { width: 7px; height: 7px; display: block; background: var(--red); }
+    .badge-strip i:nth-child(2) { background: var(--blue); }
+    .badge-strip i:nth-child(3) { background: var(--yellow); }
+    .badge-strip i:nth-child(4) { background: repeating-conic-gradient(#fff 0 25%, #050505 0 50%) 0 / 5px 5px; }
+    main { padding: 2.1rem 0 0; }
+    .hero { text-align: center; animation: rise-in .8s both; }
+    .eyebrow { color: #d0d4df; font-size: .74rem; letter-spacing: .28em; text-transform: uppercase; }
+    h1 {
+      margin: .65rem 0 .55rem; font-size: clamp(2.6rem, 7vw, 5.7rem); line-height: .97;
+      letter-spacing: .035em; font-weight: 850; text-transform: uppercase;
+      text-shadow: 0 0 40px rgba(0,117,255,.12);
+    }
+    h1 span { display: block; color: transparent; background: linear-gradient(95deg, #fff 8%, #cbd5e1 42%, #fff 64%, #aab6cf); background-clip: text; }
+    .hero-copy { margin: .8rem auto 0; color: #c2c6d1; font-size: clamp(1rem, 2vw, 1.12rem); }
+    .years { margin: 1rem 0 .35rem; color: var(--white); font-size: 1rem; letter-spacing: .3em; font-weight: 650; }
+    .years-caption { color: var(--muted); font-size: .9rem; }
+    .race-divider { display: flex; align-items: center; gap: 1rem; width: min(490px, 84%); margin: 1.7rem auto 0; }
+    .race-divider::before, .race-divider::after { content: ""; height: 1px; flex: 1; background: linear-gradient(90deg, transparent, var(--line)); }
+    .race-divider::after { transform: scaleX(-1); }
+    .race-divider span { width: 34px; height: 8px; opacity: .8; background: repeating-linear-gradient(90deg, #d9dde5 0 7px, #151720 7px 14px); transform: skewX(-22deg); }
+    .tribute { max-width: 760px; margin: 1.8rem auto 0; text-align: center; }
+    .tribute p { margin: 0 0 .65rem; color: #c3c6d0; font-size: clamp(.95rem, 1.5vw, 1.04rem); line-height: 1.58; }
+    .tribute p:last-child { color: var(--white); }
+    .honour { margin: 1.8rem auto 0; width: min(100%, 700px); padding: 1.35rem 1.3rem 1.5rem; text-align: center; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(135deg, rgba(255,43,43,.08), transparent 37%), linear-gradient(315deg, rgba(0,117,255,.11), rgba(10,11,22,.88) 58%); box-shadow: 0 24px 90px rgba(0,0,0,.25), 0 0 55px rgba(0,117,255,.06); }
+    .honour-label { color: #e5e7eb; font-size: .74rem; letter-spacing: .26em; text-transform: uppercase; }
+    .honour h2 { margin: .55rem 0 .25rem; font-size: clamp(1.55rem, 4vw, 2.35rem); letter-spacing: .07em; text-transform: uppercase; }
+    .honour p { margin: 0 0 .9rem; color: var(--muted); }
+    .cta {
+      display: inline-flex; align-items: center; justify-content: center; gap: .7rem;
+      min-height: 50px; padding: .75rem 1.5rem; border: 1px solid rgba(255,255,255,.4); border-radius: 999px;
+      background: linear-gradient(100deg, var(--red), #d92956 43%, var(--blue)); color: white;
+      text-decoration: none; font-size: .82rem; font-weight: 750; letter-spacing: .12em;
+      box-shadow: 0 10px 38px rgba(0,95,255,.18), 0 8px 26px rgba(255,43,43,.12);
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .cta:hover { transform: translateY(-2px); filter: brightness(1.12); box-shadow: 0 14px 45px rgba(0,95,255,.25), 0 8px 28px rgba(255,43,43,.18); }
+    .cta:focus-visible, .legacy-link:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+    .footer { padding: 1.5rem 0 1rem; text-align: center; }
+    .footer-rule { width: min(160px, 42%); height: 2px; margin: 0 auto 1rem; background: linear-gradient(90deg, var(--red), var(--blue), var(--yellow)); border-radius: 9px; }
+    .footer-name { font-size: .78rem; font-weight: 700; letter-spacing: .23em; }
+    .footer-years { margin-top: .55rem; color: var(--muted); font-size: .8rem; letter-spacing: .22em; }
+    .footer-line { margin-top: .8rem; color: #e7e9ee; font-size: clamp(.75rem, 2vw, .92rem); font-weight: 650; letter-spacing: .18em; }
+    @keyframes rise-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 600px) {
+      .page { width: min(100% - 2rem, 1050px); }
+      .masthead { padding-top: 1.4rem; }
+      main { padding-top: 3.4rem; }
+      .tribute { margin-top: 2.8rem; }
+      .honour { margin-top: 3rem; padding: 1.8rem 1rem 2rem; }
+      .cta { width: 100%; max-width: 370px; font-size: .73rem; padding-inline: .8rem; }
+      .footer { padding-top: 1.5rem; }
+    }
+    @media (min-width: 900px) and (min-height: 750px) {
+      body { min-height: 100svh; }
+      .page { min-height: 100svh; display: flex; flex-direction: column; }
+      main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-top: 1.4rem; }
+      .race-divider { margin-top: 1.25rem; }
+      .tribute { margin-top: 1.35rem; }
+      .honour { margin-top: 1.3rem; }
+      .footer { padding-top: 1.1rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <img src="ttrl-logo.png" alt="TTRL logo" class="logo" />
+      <div class="badge">
+        <span>Torque Titans Racing League</span>
+        <span class="badge-strip" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="eyebrow">The final chequered flag</div>
+        <h1 id="page-title">TTRL <span>A Legacy of Champions</span></h1>
+        <p class="hero-copy">Celebrating every champion who became part of Torque Titans Racing League history.</p>
+        <div class="years">2022–2026</div>
+        <div class="years-caption">Four years of racing, rivalry, friendship and unforgettable moments.</div>
+        <div class="race-divider" aria-hidden="true"><span></span></div>
+      </section>
+
+      <section class="tribute" aria-label="A thank you to the TTRL community">
+        <p>From our first race to our final chequered flag, TTRL was built around the people who raced, competed and shared the track with us.</p>
+        <p>Across Sunday leagues, Realistic championships, cups and special events, countless battles were fought and memories were made.</p>
+        <p>This Hall of Fame is our permanent record of those who reached the top.</p>
+        <p>To every driver, steward, admin, Tier Head and member of the community who was part of the journey — thank you for being part of TTRL.</p>
+      </section>
+
+      <section class="honour" aria-labelledby="honour-title">
+        <div class="honour-label">Hall of Fame</div>
+        <h2 id="honour-title">Every champion. Every winner.</h2>
+        <p>One history.</p>
+        <a class="cta" href="hall-of-fame.html"><span aria-hidden="true">🏆</span> View the Hall of Fame</a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-rule" aria-hidden="true"></div>
+      <div class="footer-name">TORQUE TITANS RACING LEAGUE</div>
+      <div class="footer-years">2022 — 2026</div>
+      <div class="footer-line">THE RACING ENDS. THE LEGACY REMAINS.</div>
+    </footer>
+  </div>
+</body>
+</html>

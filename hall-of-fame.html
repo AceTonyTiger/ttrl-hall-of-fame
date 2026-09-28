@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TTRL Hall of Fame</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      /* TTRL logo colours */
+      --ttrl-red: #ff2b2b;
+      --ttrl-blue: #0075ff;
+      --ttrl-yellow: #ffd600;
+      --ttrl-black: #050505;
+      --ttrl-white: #ffffff;
+
+      --bg: #04040a;
+      --bg-alt: #080814;
+      --card-bg: #10111f;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 43, 43, 0.18), transparent 55%),
+        radial-gradient(circle at top right, rgba(0, 117, 255, 0.18), transparent 60%),
+        radial-gradient(circle at bottom, rgba(255, 214, 0, 0.12), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 1.5rem 1.25rem 0.75rem;
+      text-align: center;
+    }
+
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .logo {
+      max-width: 260px;
+      width: 60%;
+      height: auto;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ttrl-white);
+    }
+
+    header p {
+      margin: 0.35rem 0 0.6rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .legacy-link {
+      display: inline-block;
+      margin-top: .5rem;
+      color: #dbeafe;
+      text-decoration: none;
+      font-size: .85rem;
+    }
+    .legacy-link:hover { color: var(--ttrl-yellow); }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 43, 43, 0.16),
+        rgba(0, 117, 255, 0.12),
+        rgba(255, 214, 0, 0.16)
+      );
+    }
+
+    .badge-strip {
+      display: inline-flex;
+      overflow: hidden;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.4);
+    }
+    .badge-strip span {
+      width: 8px;
+      height: 8px;
+    }
+    .badge-strip .r { background: var(--ttrl-red); }
+    .badge-strip .b { background: var(--ttrl-blue); }
+    .badge-strip .y { background: var(--ttrl-yellow); }
+    .badge-strip .c {
+      background-image: linear-gradient(45deg, var(--ttrl-black) 25%, var(--ttrl-white) 25%, var(--ttrl-white) 50%, var(--ttrl-black) 50%, var(--ttrl-black) 75%, var(--ttrl-white) 75%);
+      background-size: 6px 6px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      padding: 0 1rem 1.2rem;
+    }
+
+    .filters button {
+      background: rgba(8, 8, 20, 0.85);
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--muted);
+      font-size: 0.8rem;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .filters button:hover {
+      background: rgba(0, 117, 255, 0.28);
+      border-color: var(--ttrl-blue);
+      color: var(--ttrl-white);
+      transform: translateY(-1px);
+    }
+
+    .filters button.active {
+      background: linear-gradient(90deg, var(--ttrl-red), var(--ttrl-blue), var(--ttrl-yellow));
+      color: var(--ttrl-black);
+      border-color: transparent;
+      font-weight: 600;
+    }
+
+    main {
+      padding: 0 1rem 2.5rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .sunday-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.3rem;
+      align-items: stretch;
+    }
+
+    @media (min-width: 768px) {
+      .sunday-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .sunday-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+    }
+
+    .tier-column {
+      display: grid;
+      grid-template-rows: auto 1fr 1fr;
+      gap: 0.7rem;
+      height: 100%;
+      position: relative;
+    }
+
+    .tier-heading {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-bottom: 0.35rem;
+      margin-bottom: 0.1rem;
+      position: relative;
+    }
+
+    .tier-heading::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 24px;
+      bottom: 0;
+      height: 3px;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg,
+          var(--ttrl-red) 0%,
+          var(--ttrl-blue) 33%,
+          var(--ttrl-yellow) 66%,
+          transparent 100%);
+      background-repeat: no-repeat;
+    }
+
+    .tier-column::after {
+      content: "";
+      position: absolute;
+      top: 1.45rem;
+      right: 0;
+      width: 20px;
+      height: 3px;
+      background-image:
+        linear-gradient(90deg,
+          var(--ttrl-black) 25%, var(--ttrl-white) 25%,
+          var(--ttrl-white) 50%, var(--ttrl-black) 50%,
+          var(--ttrl-black) 75%, var(--ttrl-white) 75%);
+      background-size: 6px 3px;
+      border-radius: 999px;
+      opacity: 0.95;
+    }
+
+    .card {
+      background:
+        linear-gradient(135deg, rgba(255, 43, 43, 0.12), transparent 40%) border-box,
+        linear-gradient(225deg, rgba(0, 117, 255, 0.18), rgba(8, 8, 20, 0.96)) padding-box;
+      border-radius: var(--radius);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      padding: 0.95rem 0.95rem 0.85rem;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      min-height: 0;
+      height: 100%;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(255, 214, 0, 0.18), transparent 55%),
+        radial-gradient(circle at bottom left, rgba(0, 0, 0, 0.28), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.18s;
+      pointer-events: none;
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 1;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--ttrl-black);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      border: 2px solid rgba(0, 0, 0, 0.28);
+    }
+
+    .avatar-t1 {
+      background: linear-gradient(135deg, var(--ttrl-red), #b80000);
+    }
+    .avatar-t2 {
+      background: linear-gradient(135deg, var(--ttrl-blue), #003c96);
+    }
+    .avatar-t3 {
+      background: linear-gradient(135deg, var(--ttrl-yellow), #b28c00);
+    }
+    .avatar-t4 {
+      background: linear-gradient(135deg, #e5e7eb, #6b7280);
+    }
+    .avatar-t5 {
+      background: linear-gradient(135deg, #22d3ee, #155e75);
+    }
+    .avatar-rl {
+      background: radial-gradient(circle at 30% 20%, #111827, #000000);
+      color: var(--ttrl-white);
+    }
+    .avatar-tc {
+      background: radial-gradient(circle at 30% 20%, #ffffff, #4b5563);
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+    }
+
+    .name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .title {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.1rem;
+    }
+
+    .pill {
+      font-size: 0.68rem;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .pill.highlight {
+      border-color: rgba(255, 214, 0, 0.95);
+      color: var(--ttrl-yellow);
+      background: rgba(23, 23, 23, 0.9);
+    }
+
+    .tier-column:nth-of-type(1) .pill.highlight {
+      border-color: rgba(255, 43, 43, 0.95);
+      color: var(--ttrl-red);
+      background: rgba(32, 8, 8, 0.95);
+    }
+
+    .tier-column:nth-of-type(2) .pill.highlight {
+      border-color: rgba(0, 117, 255, 0.95);
+      color: var(--ttrl-blue);
+      background: rgba(10, 20, 45, 0.95);
+    }
+
+    .tier-column:nth-of-type(3) .pill.highlight {
+      border-color: rgba(255, 214, 0, 0.95);
+      color: var(--ttrl-yellow);
+      background: rgba(45, 36, 5, 0.95);
+    }
+
+    .tier-column:nth-of-type(4) .pill.highlight {
+      border-color: rgba(229, 231, 235, 0.95);
+      color: #e5e7eb;
+      background: rgba(55, 65, 81, 0.95);
+    }
+
+    .tier-column:nth-of-type(5) .pill.highlight {
+      border-color: rgba(34, 211, 238, 0.95);
+      color: #67e8f9;
+      background: rgba(8, 51, 68, 0.95);
+    }
+
+    #tab-realistic .pill.highlight {
+      border-color: rgba(148, 163, 184, 0.9);
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    #tab-cup .pill.highlight,
+    #tab-specials .pill.highlight {
+      border-color: rgba(255, 214, 0, 0.95);
+      color: var(--ttrl-yellow);
+      background: rgba(23, 23, 23, 0.9);
+    }
+
+    .body {
+      font-size: 0.9rem;
+      color: #e5e7f5;
+      line-height: 1.5;
+      white-space: pre-line;
+      z-index: 1;
+    }
+
+    .tier-column .card:nth-of-type(2) .body {
+      font-size: 0.84rem;
+      letter-spacing: 0.01em;
+    }
+
+    .footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--muted);
+      z-index: 1;
+    }
+
+    .tag {
+      padding: 0.12rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.6);
+      background: linear-gradient(135deg, var(--ttrl-yellow), var(--ttrl-red));
+      color: #111827;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.6rem;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .trophy {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      flex-shrink: 0;
+      opacity: 0.9;
+    }
+
+    .trophy-cup {
+      width: 52px;
+      height: 52px;
+    }
+
+    .team-logo {
+      height: 16px;
+      vertical-align: text-bottom;
+      margin-left: 4px;
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      border-left: 4px solid var(--ttrl-blue);
+      padding-left: 0.5rem;
+    }
+
+    .narrow-grid {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 767px) {
+      #tab-specials .sunday-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-wrap">
+      <img src="ttrl-logo.png" alt="TTRL logo" class="logo" />
+    </div>
+    <div class="badge">
+      <span>Torque Titans Racing League</span>
+      <span class="badge-strip">
+        <span class="r"></span>
+        <span class="b"></span>
+        <span class="y"></span>
+        <span class="c"></span>
+      </span>
+    </div>
+    <h1>TTRL Hall of Fame</h1>
+    <p>Every champion. Every winner. Every chapter of TTRL history.</p>
+    <a class="legacy-link" href="legacy.html">← TTRL Legacy</a>
+  </header>
+
+  <div class="filters">
+    <button class="active" data-tab="sunday">Sunday Race</button>
+    <button data-tab="realistic">Wednesday Realistic</button>
+    <button data-tab="cup">TTRL Cup</button>
+    <button data-tab="specials">Special Events</button>
+  </div>
+
+  <main>
+    <!-- SUNDAY RACE -->
+    <section id="tab-sunday" class="tab-panel active">
+      <div class="sunday-grid">
+        <!-- Tier 1 -->
+        <div class="tier-column">
+          <div class="tier-heading">Tier 1</div>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="f1 D.png" alt="Drivers trophy" class="trophy" />
+              <div class="avatar avatar-t1">T1</div>
+              <div class="meta">
+                <div class="name">Drivers Champions</div>
+                <div class="title">Sunday Race</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Tier 1</span>
+                  <span class="pill">Drivers</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+WrightyFTW ×2
+BigShaz
+Maxi ×3
+JasonD777
+AliFawadKhan
+Niftynasri8 ×4
+Milan
+Speeddemon
+Nightowl208735
+            </div>
+            <div class="footer">
+              <span>Multiple eras of top‑tier dominance.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="F1 con.png" alt="Constructors trophy" class="trophy" />
+              <div class="avatar avatar-t1">T1</div>
+              <div class="meta">
+                <div class="name">Constructors Champions</div>
+                <div class="title">Sunday Race</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Tier 1</span>
+                  <span class="pill">Constructors</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+BigShaz &amp; Jheit – <img src="Haas.png" alt="Haas" class="team-logo" />
+Maxi1407 &amp; BroadyJ – <img src="McLaren.png" alt="McLaren" class="team-logo" /> ×2
+BigShaz &amp; Jheit – <img src="Mercedes.png" alt="Mercedes" class="team-logo" />
+JasonD777 &amp; ChazzaMB1 – <img src="Ferrari.png" alt="Ferrari" class="team-logo" />
+AliFawadKhan &amp; Ptommo87 – <img src="RedBull.png" alt="Red Bull" class="team-logo" />
+Niftynasri8 &amp; AliFawadKhan – <img src="Ferrari.png" alt="Ferrari" class="team-logo" />
+Niftynasri8 &amp; Lucas Rasmussen – <img src="McLaren.png" alt="McLaren" class="team-logo" />
+JasonD777 &amp; Lucas Rasmussen – <img src="Williams.png" alt="Williams" class="team-logo" />
+Niftynasri8 &amp; Nahir Besara – <img src="McLaren.png" alt="McLaren" class="team-logo" />
+Milan &amp; Dinu.m.CS.POO - <img src="Ferrari.png" alt="Ferrari" class="team-logo" />
+Floris Strikey &amp; nikosun – <img src="McLaren.png" alt="McLaren" class="team-logo" />
+Nightowl208735 &amp; BalmyTick – <img src="Ferrari.png" alt="Ferrari" class="team-logo" />
+            </div>
+            <div class="footer">
+              <span>Iconic Tier 1 line‑ups.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="tier-column">
+          <div class="tier-heading">Tier 2</div>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="f1 D.png" alt="Drivers trophy" class="trophy" />
+              <div class="avatar avatar-t2">T2</div>
+              <div class="meta">
+                <div class="name">Drivers Champions</div>
+                <div class="title">Sunday Race</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Tier 2</span>
+                  <span class="pill">Drivers</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+StripperDave
+Geldy89
+Ptommo87
+Lukzz197
+NickFuryman
+Selbzz
+TTRL Azzaman
+Maxi
+Pavlison
+Badman4life
+DannyMac
+            </div>
+            <div class="footer">
+              <span>Drivers who owned the midfield.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="F1 con.png" alt="Constructors trophy" class="trophy" />
+              <div class="avatar avatar-t2">T2</div>
+              <div class="meta">
+                <div class="name">Constructors Champions</div>
+                <div class="title">Sunday Race</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Tier 2</span>
+                  <span class="pill">Constructors</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+StripperDave &amp; djbowzer‑88 – <img src="alpine.png" alt="Alpine" class="team-logo" />
+Geldy &amp; Hammerjb – <img src="Haas.png" alt="Haas" class="team-logo" />
+Ptommo87 &amp; SeanMc – <img src="alpine.png" alt="Alpine" class="team-logo" />
+Selbzz &amp; Sacko – <img src="Haas.png" alt="Haas" class="team-logo" />
+Richie Chappell &amp; TTRL Ricksta – <img src="Sauber.png" alt="Sauber" class="team-logo" />
+Jam081991 &amp; Harrison – <img src="McLaren.png" alt="McLaren" class="team-logo" />
+HellDriver &amp; Richie Chappell – <img src="McLaren.png" alt="McLaren" class="team-logo" />
+Penrose86 &amp; SaltnKepa – <img src="VCARB.png" alt="VCARB" class="team-logo" />
+Pavlison &amp; Honey_Badger - <img src="astonmartin.png" alt="astonmartin" class="team-logo" />
+Badman4life &amp; TTRL Azzaman – <img src="Mercedes.png" alt="Mercedes" class="team-logo" />
+DanyMac &amp; LRS Karl – <img src="Haas.png" alt="Haas" class="team-logo" />
+            </div>
+            <div class="footer">
+              <span>Tier 2 teamwork at its best.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="tier-column">
+          <div class="tier-heading">Tier 3</div>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="f1 D.png" alt="Drivers trophy" class="trophy" />
+              <div class="avatar avatar-t3">T3</div>
+              <div class="meta">
+                <div class="name">Drivers Champions</div>
+                <div class="title">Sunday Race</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Tier 3</span>
+                  <span class="pill">Drivers</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+lo_immortal_io
+vbthomass
+Shane
+LRS Karl
+Evan (evthelegend)
+            </div>
+            <div class="footer">
+              <span>Leaders of the Tier 3 grid.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="F1 con.png" alt="Constructors trophy" class="trophy" />
+              <div class="avatar avatar-t3">T3</div>
+              <div class="meta">
+                <div class="name">Constructors Champions</div>
+                <div class="title">Sunday Race</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Tier 3</span>
+                  <span class="pill">Constructors</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+Io_Immortal_io &amp; Cutters1982 – <img src="Williams.png" alt="Williams" class="team-logo" />
+Hxpcraft &amp; Jordanh97 – <img src="Haas.png" alt="Haas" class="team-logo" />
+Shane &amp; Richie Chappell - <img src="Williams.png" alt="Williams" class="team-logo" />
+LRS Karl &amp; Euanian_ – <img src="McLaren.png" alt="McLaren" class="team-logo" />
+Ocean_blade235 &amp; xJustHazee – <img src="Mercedes.png" alt="Mercedes" class="team-logo" />
+            </div>
+            <div class="footer">
+              <span>Tier 3 title‑winning teams.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- Tier 4 -->
+        <div class="tier-column">
+          <div class="tier-heading">Tier 4</div>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="f1 D.png" alt="Drivers trophy" class="trophy" />
+              <div class="avatar avatar-t4">T4</div>
+              <div class="meta">
+                <div class="name">Drivers Champions</div>
+                <div class="title">Sunday Race</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Tier 4</span>
+                  <span class="pill">Drivers</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+Cutters1982
+Element Snow
+MilkingBofur
+The_Spy_Classic
+            </div>
+            <div class="footer">
+              <span>Tier 4 title heroics.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="F1 con.png" alt="Constructors trophy" class="trophy" />
+              <div class="avatar avatar-t4">T4</div>
+              <div class="meta">
+                <div class="name">Constructors Champions</div>
+                <div class="title">Sunday Race</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Tier 4</span>
+                  <span class="pill">Constructors</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+SmallGirl7789 &amp; Prastgaard – <img src="Haas.png" alt="Haas" class="team-logo" />
+The_Spy_Classic &amp; yourrobbie1985 – <img src="Mercedes.png" alt="Mercedes" class="team-logo" />
+TTRL Tiger &amp; SoberDavid – <img src="Haas.png" alt="Haas" class="team-logo" />
+The_Spy_Classic &amp; StevieMac – <img src="alpine.png" alt="Alpine" class="team-logo" />
+            </div>
+            <div class="footer">
+              <span>Tier 4 title‑winning team.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- Tier 5 -->
+        <div class="tier-column">
+          <div class="tier-heading">Tier 5</div>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="f1 D.png" alt="Drivers trophy" class="trophy" />
+              <div class="avatar avatar-t5">T5</div>
+              <div class="meta">
+                <div class="name">Drivers Champions</div>
+                <div class="title">Sunday Race</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Tier 5</span>
+                  <span class="pill">Drivers</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+The Unsainted13
+            </div>
+            <div class="footer">
+              <span>Tier 5 title heroics.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="F1 con.png" alt="Constructors trophy" class="trophy" />
+              <div class="avatar avatar-t5">T5</div>
+              <div class="meta">
+                <div class="name">Constructors Champions</div>
+                <div class="title">Sunday Race</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Tier 5</span>
+                  <span class="pill">Constructors</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+The Unsainted13 &amp; KOB1M4N99 – <img src="Cadillac.png" alt="Cadillac" class="team-logo" />
+            </div>
+            <div class="footer">
+              <span>Tier 5 title-winning team.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEDNESDAY REALISTIC -->
+    <section id="tab-realistic" class="tab-panel">
+      <div class="sunday-grid narrow-grid">
+        <div class="tier-column" style="grid-template-rows: auto 1fr 1fr; gap: 0.7rem;">
+          <div class="tier-heading">Realistic</div>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="f1 D.png" alt="Drivers trophy" class="trophy" />
+              <div class="avatar avatar-rl">RL</div>
+              <div class="meta">
+                <div class="name">Wednesday Realistic Champions</div>
+                <div class="title">Race 1</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Realistic</span>
+                  <span class="pill">Drivers</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+Milan x2
+Ethan
+Jason_D777
+            </div>
+            <div class="footer">
+              <span>Master of the realistic‑performance format.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <img src="f1 D.png" alt="Drivers trophy" class="trophy" />
+              <div class="avatar avatar-rl">RL</div>
+              <div class="meta">
+                <div class="name">Wednesday Realistic Champions</div>
+                <div class="title">Race 2</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Realistic</span>
+                  <span class="pill">Drivers</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+Ocean Blade
+MilesC
+            </div>
+            <div class="footer">
+              <span>Master of the realistic‑performance format.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TTRL CUP -->
+    <section id="tab-cup" class="tab-panel">
+      <div class="sunday-grid narrow-grid">
+        <div class="tier-column" style="grid-template-rows: auto 1fr; gap: 0.7rem;">
+          <div class="tier-heading">TTRL Cup</div>
+          <article class="card">
+            <div class="card-header">
+              <img src="TTRLCup.png" alt="TTRL Cup logo" class="trophy trophy-cup" />
+              <div class="avatar avatar-tc">TC</div>
+              <div class="meta">
+                <div class="name">TTRL Cup Champions</div>
+                <div class="title">Knockout &amp; cup formats</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Cup</span>
+                  <span class="pill">Events</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+Season 1 – Team 15
+Drivers: Speeddemon, SevyJnr, S3L8ZZ, Wallis57snr
+Reserve drivers: Edveer, Element Snow
+            </div>
+            <div class="footer">
+              <span>Founding champions of the TTRL Cup.</span>
+              <span class="tag">Champions</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECIAL EVENTS -->
+    <section id="tab-specials" class="tab-panel">
+      <div class="sunday-grid" style="max-width: 900px; margin: 0 auto; grid-template-columns: repeat(2, minmax(0, 1fr));">
+        <div class="tier-column" style="grid-template-rows: auto 1fr; gap: 0.7rem;">
+          <div class="tier-heading">Special Events</div>
+          <article class="card">
+            <div class="card-header">
+              <img src="f1 D.png" alt="Drivers trophy" class="trophy" />
+              <div class="avatar avatar-t4">FB</div>
+              <div class="meta">
+                <div class="name">S7 Flashback Tournament Winners</div>
+                <div class="title">Special Event</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Flashback</span>
+                  <span class="pill">S7</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+SRL Tyrone
+Lucas Rasmussen
+Niftynasri8
+JasonD777
+Milan
+Drast1kBlaze
+Semm
+Nahir Besara
+PainzDead
+Alkai
+Speedemon
+Ewan (TheonlyEGC)
+Floris Strikey
+Brandon Asquith
+            </div>
+            <div class="footer">
+              <span>Champions of the TTRL Flashback tournament.</span>
+              <span class="tag">Event</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="tier-column" style="grid-template-rows: auto 1fr; gap: 0.7rem;">
+          <div class="tier-heading" style="opacity: 0;">Special Events</div>
+          <article class="card">
+            <div class="card-header">
+              <img src="f1 D.png" alt="Drivers trophy" class="trophy" />
+              <div class="avatar avatar-t4">FB</div>
+              <div class="meta">
+                <div class="name">S8 Flashback Tournament Winners</div>
+                <div class="title">Special Event</div>
+                <div class="pill-row">
+                  <span class="pill highlight">Flashback</span>
+                  <span class="pill">S8</span>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+Nardo
+Strikey
+Ethan
+Milan
+Loomi
+Speedemon
+Friet
+Nifty
+Red dragan
+Regent
+Vigoes
+Oliverbroadford
+John Marco
+Willz
+            </div>
+            <div class="footer">
+              <span>Champions of the TTRL Flashback tournament.</span>
+              <span class="tag">Event</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const tabButtons = document.querySelectorAll('.filters button');
+    const panels = {
+      sunday: document.getElementById('tab-sunday'),
+      realistic: document.getElementById('tab-realistic'),
+      cup: document.getElementById('tab-cup'),
+      specials: document.getElementById('tab-specials'),
+    };
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-tab');
+        tabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        Object.keys(panels).forEach(key => {
+          panels[key].classList.toggle('active', key === target);
+        });
+      });
+    });
+
+  </script>
+</body>
+</html>
