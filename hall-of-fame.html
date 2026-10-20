@@ -121,7 +121,9 @@
       padding: 0 1rem 1.2rem;
     }
 
-    .filters button {
+    .filters button,
+    .filters .filter-link {
+      display: inline-block;
       background: rgba(8, 8, 20, 0.85);
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.6);
@@ -132,14 +134,18 @@
       transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
       text-transform: uppercase;
       letter-spacing: 0.12em;
+      text-decoration: none;
     }
 
-    .filters button:hover {
+    .filters button:hover,
+    .filters .filter-link:hover {
       background: rgba(0, 117, 255, 0.28);
       border-color: var(--ttrl-blue);
       color: var(--ttrl-white);
       transform: translateY(-1px);
     }
+
+    .filters .filter-link:focus-visible { outline: 3px solid var(--ttrl-yellow); outline-offset: 3px; }
 
     .filters button.active {
       background: linear-gradient(90deg, var(--ttrl-red), var(--ttrl-blue), var(--ttrl-yellow));
@@ -489,6 +495,7 @@
     <button data-tab="realistic">Wednesday Realistic</button>
     <button data-tab="cup">TTRL Cup</button>
     <button data-tab="specials">Special Events</button>
+    <a class="filter-link" href="commentary-team.html"><span aria-hidden="true">🎙️</span> Comms Team</a>
   </div>
 
   <main>
